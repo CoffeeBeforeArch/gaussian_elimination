@@ -20,7 +20,7 @@ void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N) {
     // Eliminate this column from the rest of the matrix
     // For each remaining row in the matrix
     for (std::size_t sub_row = pivot_row + 1; sub_row < N; sub_row++) {
-      // Scale factor for eliminating pivot element from later rows
+      // Scale factor for eliminating for elemenating this column
       double elim_scale = A[sub_row * N + pivot_row];
 
       // Finish the remainder of the row
