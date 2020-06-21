@@ -4,9 +4,10 @@
 
 #include <algorithm>
 #include <random>
+#include <vector>
 
 // Function prototype for serial GE
-void serial_ge(double *A, double *b, std::size_t N);
+void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N);
 
 static void serial_ge_bench(benchmark::State &s) {
   // Number Dimensions of our matrix
@@ -18,22 +19,18 @@ static void serial_ge_bench(benchmark::State &s) {
   std::uniform_real_distribution<double> dist(-10, 10);
 
   // Create input matrices
-  double *A = new double[N * N];
-  double *b = new double[N];
+  std::vector<double> A(N * N);
+  std::vector<double> b(N);
 
   // Initialize them with random values
-  std::generate(A, A + (N * N), [&] { return dist(rng); });
-  std::generate(b, A + N, [&] { return dist(rng); });
+  std::generate(begin(A), end(A), [&] { return dist(rng); });
+  std::generate(begin(b), end(b), [&] { return dist(rng); });
 
   // Main benchmark loop
   for (auto _ : s) {
     serial_ge(A, b, N);
   }
-
-  // Free memory
-  delete[] A;
-  delete[] b;
 }
-BENCHMARK(serial_ge_bench)->DenseRange(8, 10)->Unit(benchmark::kMillisecond);
+BENCHMARK(serial_ge_bench)->DenseRange(8, 10);
 
 BENCHMARK_MAIN();
