@@ -9,11 +9,8 @@ void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N) {
     // Save the pivot value
     double scale = A[N * pivot_row * pivot_row];
 
-    // Set the pivot equal to 1
-    A[N * pivot_row + pivot_row] = 1.0;
-
     // Divide the remaining elements in the vector
-    for (std::size_t col = pivot_row + 1; col < N; col++) {
+    for (std::size_t col = pivot_row; col < N; col++) {
       A[N * pivot_row + col] /= scale;
     }
 
@@ -26,14 +23,11 @@ void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N) {
       // Scale factor for eliminating pivot element from later rows
       double elim_scale = A[sub_row * N + pivot_row];
 
-      // Eliminate the pivot element
-      A[N * sub_row + pivot_row] = 0.0;
-
       // Apply changes to "b"
       b[sub_row] -= b[pivot_row] * elim_scale;
 
       // Finish the remainder of the row
-      for (std::size_t col = pivot_row + 1; col < N; col++) {
+      for (std::size_t col = pivot_row; col < N; col++) {
         A[N * sub_row + col] -= A[N * pivot_row + col] * elim_scale;
       }
     }
