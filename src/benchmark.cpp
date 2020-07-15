@@ -7,7 +7,7 @@
 #include <vector>
 
 // Function prototype for serial GE
-void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N);
+void serial_ge(std::vector<double> &A, std::size_t N);
 
 static void serial_ge_bench(benchmark::State &s) {
   // Number Dimensions of our matrix
@@ -20,15 +20,13 @@ static void serial_ge_bench(benchmark::State &s) {
 
   // Create input matrices
   std::vector<double> A(N * N);
-  std::vector<double> b(N);
 
   // Initialize them with random values
   std::generate(begin(A), end(A), [&] { return dist(rng); });
-  std::generate(begin(b), end(b), [&] { return dist(rng); });
 
   // Main benchmark loop
   for (auto _ : s) {
-    serial_ge(A, b, N);
+    serial_ge(A, N);
   }
 }
 BENCHMARK(serial_ge_bench)->DenseRange(8, 10);

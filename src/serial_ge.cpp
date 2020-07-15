@@ -3,7 +3,7 @@
 #include <vector>
 
 // Serial implementation
-void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N) {
+void serial_ge(std::vector<double> &A, std::size_t N) {
   // For each row in the matrix
   for (std::size_t pivot_row = 0; pivot_row < N; pivot_row++) {
     // Save the pivot value
@@ -13,9 +13,6 @@ void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N) {
     for (std::size_t col = pivot_row; col < N; col++) {
       A[N * pivot_row + col] /= scale;
     }
-
-    // Scale "b"
-    b[pivot_row] /= scale;
 
     // Eliminate this column from the rest of the matrix
     // For each remaining row in the matrix
@@ -28,8 +25,6 @@ void serial_ge(std::vector<double> &A, std::vector<double> &b, std::size_t N) {
         A[N * sub_row + col] -= A[N * pivot_row + col] * elim_scale;
       }
       
-      // Apply changes to "b"
-      b[sub_row] -= b[pivot_row] * elim_scale;
     }
   }
 }
