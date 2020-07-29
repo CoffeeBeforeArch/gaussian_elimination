@@ -11,7 +11,7 @@ void parallel_ge(std::vector<double> &A, std::size_t N,
   for (std::size_t pivot_row = 0; pivot_row < N; pivot_row++) {
     if (pivot_row >= start_row && pivot_row < end_row) {
       // Save the pivot value
-      double scale = A[N * pivot_row * pivot_row];
+      double scale = A[N * pivot_row + pivot_row];
 
       // Divide the remaining elements in the vector
       for (std::size_t col = pivot_row; col < N; col++) {
